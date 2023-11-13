@@ -16,11 +16,6 @@ const config: Config = {
       minHeight: {
         '5': '1.25rem',
         '10': '2.5rem',
-      },
-      width: {
-        '1/2calc': 'calc(50% - 10px)',
-        '1/3calc': 'calc(33.333333% - 20px)',
-        '1/4calc': 'calc(25% - 10px)',
       }
     },
   },

@@ -4,7 +4,7 @@ import SearchCard from "./Cards/SearchCard";
 
 export default async function Dashboard() {
     return (
-        <div className="flex p-5 sm:gap-x-4 gap-y-5 flex-col sm:flex-row flex-wrap">
+        <div className="grid grid-cols-2 gap-4 flex-1 p-5 border-r border-r-white">
             <GeneralInfoCard />
             <GenreCard />
             <SearchCard />

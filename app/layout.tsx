@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import './ag-grid/ag-grid.css'
+import './ag-grid/ag-theme-alpine.css'
 import AuthProvider from './auth/Provider'
 import NavBar from './NavBar'
 
@@ -20,7 +22,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <AuthProvider>
         <body className={inter.className}>
-          <NavBar />
+          {/* <NavBar /> */}
           {children}
         </body>
       </AuthProvider>
