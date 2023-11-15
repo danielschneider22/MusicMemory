@@ -4,7 +4,7 @@ import { AgGridReact } from "ag-grid-react";
 
 export default function SongsGrid() {
     return (
-      <div className="ag-theme-alpine-dark CardsGrid w-full">
+      <div className="ag-theme-alpine-dark CardsGrid w-full h-full flex-grow">
             <AgGridReact rowData={[]}>
                 {/* <AgGridColumn field="action" headerName="" cellRenderer={"addOrRemoveRenderer"} cellRendererParams={{set: setEffected}} width={75} floatingFilter={false} filter={false}></AgGridColumn>
                 <AgGridColumn field="name" headerName="Name" cellStyle={{cursor: "pointer", fontWeight: "bold", color: "#b1b100", textDecoration: "underline"}} sort={"asc"} tooltipComponent={"hoverShowCardImage"} tooltipField="name"></AgGridColumn>

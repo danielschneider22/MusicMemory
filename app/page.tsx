@@ -1,16 +1,44 @@
-import { getServerSession } from 'next-auth'
-import { authOptions } from './api/auth/[...nextauth]/authOptions';
+'use client';
+
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import Dashboard from './components/Dashboard/Dashboard';
 import SongGridCard from './components/SongGrid/SongGridCard';
+import { useEffect, useState } from 'react';
+import { SpotifyData, SpotifyContext } from './spotify/SpotifyProvider';
+import { getSpotifyAccessToken } from './spotify/api';
 
-export default async function Home() {
-  const session = await getServerSession(authOptions);
-  
+const apiKey = '19fce7acf3e94922904d9a6e63e6112c';
+const apiSecret = '298c80a0a18a4314bb9a32905f5d862e';
+
+export default function Home() {
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
+
+  const [spotifyData, setSpotifyData] = useState<SpotifyData>({ bearerToken: ""});
+
+  useEffect(() => {
+    getSpotifyAccessToken(apiKey, apiSecret)
+    .then((bearerToken) => {
+      setSpotifyData({...spotifyData, bearerToken})
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }, [])
+
   return (
-    <main className="flex flex-row h-screen">
-      {/* <h1 className={"font-poppins"}>Hello {session && <span>{session.user!.name}</span>}</h1> */}
-      <Dashboard />
-      <SongGridCard />
-    </main>
+    <ThemeProvider theme={darkTheme}>
+      <SpotifyContext.Provider value={{ data: spotifyData, setData: setSpotifyData}}>
+        <CssBaseline />
+        <main className="flex flex-row h-screen">
+          <Dashboard />
+          <SongGridCard />
+        </main>
+      </SpotifyContext.Provider>
+      
+    </ThemeProvider>
   )
 }
