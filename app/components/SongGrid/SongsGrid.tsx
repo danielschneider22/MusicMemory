@@ -1,22 +1,37 @@
 'use client';
 
+import { SpotifyContext } from "@/app/spotify/SpotifyProvider";
+import { SpotifyTrack } from "@/app/spotify/api";
+import { ColDef, GridApi } from "@ag-grid-community/core";
 import { AgGridReact } from "ag-grid-react";
+import { Dispatch, useContext, useState } from "react";
 
-export default function SongsGrid() {
+interface Props{
+    setGridAPI: Dispatch<any>;
+}
+
+export default function SongsGrid({setGridAPI}: Props) {
+    const { data, setData } = useContext(SpotifyContext)!;
+    const columnDefs: (ColDef<SpotifyTrack, any>)[] = [
+        { headerName: 'Song', field: "name", sortable: true, filter: true },
+        { headerName: 'Artist', field: "artist", sortable: true, filter: true },
+        { headerName: 'Album', field: "album", sortable: true, filter: true },
+        { headerName: 'Release Date', field: "date", sortable: true, filter: true, 
+        cellRenderer: (params: any) => {
+            // Format the date using your preferred date-fns or other date formatting library
+            const formattedDate = new Date(params.value).toLocaleDateString();
+            return formattedDate;
+        } },
+        { headerName: 'Type', field: "type", sortable: true, filter: true }
+    ];
+    
     return (
       <div className="ag-theme-alpine-dark CardsGrid w-full h-full flex-grow">
-            <AgGridReact rowData={[]}>
-                {/* <AgGridColumn field="action" headerName="" cellRenderer={"addOrRemoveRenderer"} cellRendererParams={{set: setEffected}} width={75} floatingFilter={false} filter={false}></AgGridColumn>
-                <AgGridColumn field="name" headerName="Name" cellStyle={{cursor: "pointer", fontWeight: "bold", color: "#b1b100", textDecoration: "underline"}} sort={"asc"} tooltipComponent={"hoverShowCardImage"} tooltipField="name"></AgGridColumn>
-                <AgGridColumn field="desc" headerName="Description" width={700} wrapText={true}></AgGridColumn>
-                <AgGridColumn field="type" headerName="Type" width={150}></AgGridColumn>
-                <AgGridColumn field="race" headerName="Subtype/Race" width={150}></AgGridColumn>
-                <AgGridColumn field="atk" headerName="Attack" width={120}></AgGridColumn>
-                <AgGridColumn field="def" headerName="Defense" width={120}></AgGridColumn>
-                <AgGridColumn field="level" headerName="Level" width={120}></AgGridColumn>
-                <AgGridColumn field="attribute" headerName="Attribute" width={120}></AgGridColumn> */}
-            </AgGridReact>
-        </div>
+        <AgGridReact
+            rowData={data.songList} columnDefs={columnDefs as any}
+            onGridReady={(params) => (setGridAPI(params.api))}
+        />
+      </div>
     )
   }
   

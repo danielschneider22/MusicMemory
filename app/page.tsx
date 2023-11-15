@@ -6,6 +6,7 @@ import SongGridCard from './components/SongGrid/SongGridCard';
 import { useEffect, useState } from 'react';
 import { SpotifyData, SpotifyContext } from './spotify/SpotifyProvider';
 import { getSpotifyAccessToken } from './spotify/api';
+import { GeneralInfo, GeneralInfoContext } from './GeneralInfoContext';
 
 const apiKey = '19fce7acf3e94922904d9a6e63e6112c';
 const apiSecret = '298c80a0a18a4314bb9a32905f5d862e';
@@ -17,7 +18,8 @@ export default function Home() {
     },
   });
 
-  const [spotifyData, setSpotifyData] = useState<SpotifyData>({ bearerToken: ""});
+  const [spotifyData, setSpotifyData] = useState<SpotifyData>({ bearerToken: "", songList: []});
+  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({ firstName: "", lastName: "", lowerAge: 8, upperAge: 30, currAge: null});
 
   useEffect(() => {
     getSpotifyAccessToken(apiKey, apiSecret)
@@ -32,13 +34,14 @@ export default function Home() {
   return (
     <ThemeProvider theme={darkTheme}>
       <SpotifyContext.Provider value={{ data: spotifyData, setData: setSpotifyData}}>
-        <CssBaseline />
-        <main className="flex flex-row h-screen">
-          <Dashboard />
-          <SongGridCard />
-        </main>
+        <GeneralInfoContext.Provider value={{ data: generalInfo, setData: setGeneralInfo}}>
+          <CssBaseline />
+          <main className="flex flex-row h-screen">
+            <Dashboard />
+            <SongGridCard />
+          </main>
+        </GeneralInfoContext.Provider>
       </SpotifyContext.Provider>
-      
     </ThemeProvider>
   )
 }
