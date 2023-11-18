@@ -16,6 +16,7 @@ const config: Config = {
       minHeight: {
         '5': '1.25rem',
         '10': '2.5rem',
+        '300': '300px'
       }
     },
   },

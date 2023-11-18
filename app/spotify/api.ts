@@ -48,8 +48,8 @@ export async function getSpotifyAccessToken(apiKey: string, apiSecret: string): 
     type: string
   }
 
-  export async function spotifySearchTrack(track: string, bearerToken: string): Promise<SpotifyTrack[]> {
-    const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(track)}&type=track&limit=10`;
+  export async function spotifySearchTrack(search: string, bearerToken: string, limit: number): Promise<SpotifyTrack[]> {
+    const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(search)}&type=track&limit=${limit}`;
   
     const requestOptions: RequestInit = {
       method: 'GET',

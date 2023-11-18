@@ -19,7 +19,7 @@ export default function Home() {
   });
 
   const [spotifyData, setSpotifyData] = useState<SpotifyData>({ bearerToken: "", songList: []});
-  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({ firstName: "", lastName: "", lowerAge: 8, upperAge: 30, currAge: null});
+  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({ firstName: "", lastName: "", lowerAge: 10, upperAge: 30, currAge: null});
 
   useEffect(() => {
     getSpotifyAccessToken(apiKey, apiSecret)
