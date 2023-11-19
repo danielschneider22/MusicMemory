@@ -28,7 +28,7 @@ export default function Modal({header, onSubmit, placeholder, closeModal}: Props
                         </button>
                     </div>
                     <div className="p-4 md:p-5 space-y-4">
-                        <textarea value={text} onChange={(e) => setText(e.currentTarget.value)} placeholder={placeholder} className="placeholder-slate-400 p-1 min-h-300 dark:bg-gray-500 text-base leading-relaxed text-gray-200 dark:text-gray-200 w-full">
+                        <textarea value={text} onChange={(e) => setText(e.currentTarget.value)} placeholder={placeholder} className="placeholder-slate-400 p-1 min-h-300 outline-none focus:ring focus:border-slate-300 dark:bg-gray-600 text-base leading-relaxed text-gray-200 dark:text-gray-200 w-full">
                         </textarea>
                     </div>
                     <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">

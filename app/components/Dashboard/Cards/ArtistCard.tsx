@@ -13,7 +13,7 @@ export default function ArtistCard() {
         if(tracks) {
           const filteredTracks = tracks.filter((track) => track.artist.toLowerCase() === artist.toLowerCase())
           setData!((prevData) => {
-            const newSongList = filterUniqueSongs([...prevData.songList, ...filteredTracks])
+            const newSongList = filterUniqueSongs([...prevData.songList, ...filteredTracks]).map((track) => {return {...track, type: "Artist Picker"}})
             return { ...prevData, songList: newSongList };
           });
           setArtist("")
