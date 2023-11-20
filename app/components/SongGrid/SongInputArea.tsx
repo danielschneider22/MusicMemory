@@ -70,7 +70,7 @@ export default function SongInputArea({gridAPI} : {gridAPI: any}) {
 
     const bulkUploadSongs = (text: string) => {
       text.split("\n").forEach((song) => {
-        spotifySearchTrack(song, data.bearerToken, 5).then((tracks) => {
+        spotifySearchTrack(song, 5).then((tracks) => {
           const origTracks = tracks.sort((a, b) => {
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
@@ -120,7 +120,7 @@ export default function SongInputArea({gridAPI} : {gridAPI: any}) {
                     }}
                     onInputChange={(e, value) => {
                       if(value.length >= 3) {
-                        spotifySearchTrack(value, data.bearerToken, 10).then((data) => {
+                        spotifySearchTrack(value, 10).then((data) => {
                           setOptions(data);
                         })
                       }

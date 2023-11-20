@@ -3,14 +3,11 @@
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import Dashboard from './components/Dashboard/Dashboard';
 import SongGridCard from './components/SongGrid/SongGridCard';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SpotifyData, SpotifyContext } from './spotify/SpotifyProvider';
-import { getSpotifyAccessToken } from './spotify/api';
 import { GeneralInfo, GeneralInfoContext } from './GeneralInfoContext';
 import Footer from './components/Footer/Footer';
 
-const apiKey = '19fce7acf3e94922904d9a6e63e6112c';
-const apiSecret = '298c80a0a18a4314bb9a32905f5d862e';
 
 export default function Home() {
   const darkTheme = createTheme({
@@ -22,15 +19,6 @@ export default function Home() {
   const [spotifyData, setSpotifyData] = useState<SpotifyData>({ bearerToken: "", songList: []});
   const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({ firstName: "", lastName: "", lowerAge: 10, upperAge: 30, currAge: null});
 
-  useEffect(() => {
-    getSpotifyAccessToken(apiKey, apiSecret)
-    .then((bearerToken) => {
-      setSpotifyData({...spotifyData, bearerToken})
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-  }, [])
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -38,7 +26,7 @@ export default function Home() {
         <GeneralInfoContext.Provider value={{ data: generalInfo, setData: setGeneralInfo}}>
           <CssBaseline />
           <main className="flex flex-col h-screen">
-            <div className="flex flex-row h-screen">
+            <div className="flex flex-row">
               <Dashboard />
               <SongGridCard />
             </div>

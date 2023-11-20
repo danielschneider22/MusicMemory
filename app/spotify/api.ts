@@ -1,37 +1,21 @@
-export async function getSpotifyAccessToken(apiKey: string, apiSecret: string): Promise<string> {
-    const url = `https://accounts.spotify.com/api/token`;
 
-    var urlencoded = new URLSearchParams();
-    urlencoded.append("grant_type", "client_credentials");
-    urlencoded.append("client_id", apiKey);
-    urlencoded.append("client_secret", apiSecret);
-  
-    const requestOptions: RequestInit = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: urlencoded,
-      redirect: 'follow'
-    };
-  
-    try {
-      const response = await fetch(url, requestOptions);
-  
-      if (!response.ok) {
-        throw new Error(`Failed to fetch Spotify access token. Status: ${response.status}`);
-      }
-  
-      const data = await response.json();
-  
-      // Assuming successful response contains an access token
-      const accessToken = data.access_token;
-  
-      return accessToken;
-    } catch (error) {
-      console.error('Error fetching Spotify access token:', error);
-      return "";
+interface SpotifyBearerToken {
+  bearerToken: string,
+  expires: Date
+}
+
+export async function getSpotifyAccessToken(): Promise<SpotifyBearerToken> {
+    const response = await fetch("/api/spotify/bearerToken");
+    const json = await response.json();
+    if(!response.ok) {
+      console.error(json.error)
+      throw Error(json.error)
     }
+    const oneHourFromNow = new Date(new Date());
+    oneHourFromNow.setHours(new Date().getHours() + 1);
+    const bearerToken =  { bearerToken: json.bearerToken, expires: oneHourFromNow}
+    localStorage.setItem("bearerToken", JSON.stringify(bearerToken))
+    return bearerToken;
   }
 
   interface ISpotifyTrack {
@@ -48,13 +32,18 @@ export async function getSpotifyAccessToken(apiKey: string, apiSecret: string): 
     type: string
   }
 
-  export async function spotifySearchTrack(search: string, bearerToken: string, limit: number): Promise<SpotifyTrack[]> {
+  export async function spotifySearchTrack(search: string, limit: number): Promise<SpotifyTrack[]> {
+    let bearerTokenStr = localStorage.getItem("bearerToken")
+    let token = bearerTokenStr ? JSON.parse(bearerTokenStr) : undefined
+    if(!token || (token && new Date() > new Date(token.expires))) {
+      token = await getSpotifyAccessToken();
+    }
+
     const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(search)}&type=track&limit=${limit}`;
-  
     const requestOptions: RequestInit = {
       method: 'GET',
       headers: {
-        'Authorization': 'Bearer ' + bearerToken,
+        'Authorization': 'Bearer ' + token.bearerToken,
       },
     };
   
