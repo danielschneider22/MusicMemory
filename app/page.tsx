@@ -6,7 +6,7 @@ import SongGridCard from './components/SongGrid/SongGridCard';
 import { useState } from 'react';
 import { SpotifyData, SpotifyContext } from './spotify/SpotifyProvider';
 import { GeneralInfo, GeneralInfoContext } from './GeneralInfoContext';
-import Footer from './components/Footer/Footer';
+import Header from './components/Footer/Header';
 
 
 export default function Home() {
@@ -18,6 +18,7 @@ export default function Home() {
 
   const [spotifyData, setSpotifyData] = useState<SpotifyData>({ bearerToken: "", songList: []});
   const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({ firstName: "", lastName: "", lowerAge: 10, upperAge: 30, currAge: null});
+  const [ gridAPI, setGridAPI ] = useState<any>();
 
 
   return (
@@ -26,11 +27,11 @@ export default function Home() {
         <GeneralInfoContext.Provider value={{ data: generalInfo, setData: setGeneralInfo}}>
           <CssBaseline />
           <main className="flex flex-col h-screen">
+           <Header gridAPI={gridAPI} />
             <div className="flex flex-row">
               <Dashboard />
-              <SongGridCard />
+              <SongGridCard setGridAPI={setGridAPI} />
             </div>
-            <Footer />
           </main>
         </GeneralInfoContext.Provider>
       </SpotifyContext.Provider>
