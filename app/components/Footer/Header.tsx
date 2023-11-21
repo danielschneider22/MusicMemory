@@ -126,7 +126,7 @@ const Footer = ({gridAPI}: {gridAPI: any}) => {
 
   return (
     <>
-      <div className="w-screen flex justify-center space-x-2 pt-4">
+      <div className="w-screen flex justify-center space-x-2 pt-4 border-b border-b-gray-800">
         <button onClick={exportUserData} type="button" className="text-white p-3 w-48 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-m px-5 py-2.5  mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Save User</button>
         <input ref={fileInputRef} type="file" onChange={importUserData} accept=".json" className="hidden" />
         <button onClick={handleFileInputClick} type="button" className="text-white p-3 w-48 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-m px-5 py-2.5  mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Load User</button>

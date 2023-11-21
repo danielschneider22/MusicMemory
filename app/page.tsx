@@ -28,7 +28,7 @@ export default function Home() {
           <CssBaseline />
           <main className="flex flex-col h-screen">
            <Header gridAPI={gridAPI} />
-            <div className="flex flex-row">
+            <div className="flex flex-row flex-grow">
               <Dashboard />
               <SongGridCard setGridAPI={setGridAPI} />
             </div>
