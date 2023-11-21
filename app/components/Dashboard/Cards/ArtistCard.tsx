@@ -26,7 +26,7 @@ export default function ArtistCard() {
     };
     return (
       <div className={"p-8 bg-gray-800 rounded-lg shadow-lg text-gray-200"}>
-          <h1 className="text-center mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Artist Picker</h1>
+          <h1 className="text-center mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Artists</h1>
           <div className="grid md:grid-cols-1 md:gap-6">
                 <Autocomplete
                     blurOnSelect={true}

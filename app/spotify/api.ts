@@ -5,7 +5,7 @@ interface SpotifyBearerToken {
 }
 
 export async function getSpotifyAccessToken(): Promise<SpotifyBearerToken> {
-    const response = await fetch("/api/spotify/bearerToken");
+    const response = await fetch("/api/spotify/bearerToken", {cache: 'no-store'});
     const json = await response.json();
     if(!response.ok) {
       console.error(json.error)
@@ -14,6 +14,7 @@ export async function getSpotifyAccessToken(): Promise<SpotifyBearerToken> {
     const oneHourFromNow = new Date(new Date());
     oneHourFromNow.setHours(new Date().getHours() + 1);
     const bearerToken =  { bearerToken: json.bearerToken, expires: oneHourFromNow}
+    console.log(json.bearerToken)
     localStorage.setItem("bearerToken", JSON.stringify(bearerToken))
     return bearerToken;
   }
@@ -51,15 +52,23 @@ export async function getSpotifyAccessToken(): Promise<SpotifyBearerToken> {
       const response = await fetch(url, requestOptions);
   
       if (!response.ok) {
-        throw new Error(`Failed to fetch Spotify track. Status: ${response.status}`);
+        const data = await response.json();
+        if(data.error.message.includes("expired")) {
+          await getSpotifyAccessToken();
+          return spotifySearchTrack(search, limit);
+        } else {
+          throw new Error(`Failed to fetch Spotify track. Status: ${response.status}`);
+        }
+        
       }
   
       const data: {tracks: {items: ISpotifyTrack[]}} = await response.json();
-
       const mapped = data?.tracks?.items?.map((track) => { return { name: track.name, artist: track.artists[0].name, album: track.album.name, date: track.album.release_date, type: "User Chosen" }}) || [];
       return mapped.filter(
         (song, index, self) =>
           index ===
+
+
           self.findIndex((s) => s.name === song.name && s.artist === song.artist)
       )
 

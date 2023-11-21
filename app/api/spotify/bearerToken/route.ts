@@ -16,7 +16,8 @@ export async function GET(){
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: urlencoded,
-      redirect: 'follow'
+      redirect: 'follow',
+      cache: 'no-store'
     };
   
     try {

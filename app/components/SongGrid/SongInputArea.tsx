@@ -128,8 +128,8 @@ export default function SongInputArea({gridAPI} : {gridAPI: any}) {
                 />
                 </div>
                 <div className="grid md:grid-cols-3 md:gap-x-1">
-                    <button onClick={() => setShowModal(true)} id="button" type="submit" className="bg-green-600 mb-3 shadow-xl hover:bg-green-500 text-white font-bold rounded-lg w-full">Bulk Add Songs</button>
-                    <button onClick={() => onExportButtonClick()} id="button" type="submit" className="bg-orange-600 mb-3 shadow-xl hover:bg-orange-500 text-white font-bold rounded-lg w-full">Export to CSV</button>
+                    <button onClick={() => setShowModal(true)} id="button" type="submit" className="bg-purple-600 mb-3 shadow-xl hover:bg-purple-500 text-white font-bold rounded-lg w-full">Bulk Add Songs</button>
+                    <button onClick={() => onExportButtonClick()} id="button" type="submit" className="bg-green-600 mb-3 shadow-xl hover:bg-green-500 text-white font-bold rounded-lg w-full">Export to CSV</button>
                     <button onClick={() => exportItunesPlaylist()} id="button" type="submit" className="bg-slate-600 mb-3 shadow-xl hover:bg-slate-500 text-white font-bold rounded-lg w-full">Create Apple Playlist</button>
                 </div>
                 {modalShown && <Modal closeModal={() => setShowModal(false)} placeholder={placeholderText} header={"Bulk Add Songs"} onSubmit={(text) => { bulkUploadSongs(text); setShowModal(false)}}/>}
