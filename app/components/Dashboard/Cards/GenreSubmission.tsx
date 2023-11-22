@@ -7,24 +7,30 @@ interface Props {
   disabled: boolean,
   genre: string
   setGenre: Dispatch<SetStateAction<{label: string}>>
+  setLoading: Dispatch<SetStateAction<boolean>>
 }
 
-export default function GenreSubmission({ disabled, genre, setGenre }: Props) {
+export default function GenreSubmission({ disabled, genre, setGenre, setLoading }: Props) {
     const [numSongs, setNumSongs] = useState(20);
     const [genres, setGenres] = useState<string[]>([]);
     const getGenreSongs = async () => {
-      setGenres([...genres, genre])
-      setGenre({ label: ""})
-      // const body = {
-      //   genre: "Rock",
-      //   numRequested: 50,
-      //   lowerDate: 1935,
-      //   upperDate: 1965
-      // }
-      // const response = await fetch("/api/genreSongs", { body: JSON.stringify(body), method: "POST" })
-      // const json = await response.json();
-      // console.log(json)
-      // setGenres([...genres, genre])
+      setLoading(true)
+      try{
+        const body = {
+          genre: "Rock",
+          numRequested: 50,
+          lowerDate: 1935,
+          upperDate: 1965
+        }
+        const response = await fetch("/api/genreSongs", { body: JSON.stringify(body), method: "POST" })
+        const json = await response.json();
+        setGenres([...genres, genre])
+        setGenre({ label: ""})
+        setLoading(false)
+      } catch(e) {
+        setLoading(false)
+        console.error("Error loading genre songs")
+      }
     }
     return (
         <>

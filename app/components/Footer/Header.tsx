@@ -143,9 +143,9 @@ const Footer = ({gridAPI}: {gridAPI: any}) => {
   return (
     <>
       <div className="w-screen flex justify-center space-x-2 pt-4 border-b border-b-gray-800">
-        <button onClick={exportUserData} type="button" className="text-white p-3 w-48 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-m px-5 py-2.5  mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Save User</button>
+        <button onClick={exportUserData} type="button" className="text-white p-3 w-48 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-m px-5 py-2.5  mb-2 dark:bg-teal-800 dark:hover:bg-teal-700 dark:focus:ring-gray-700 dark:border-gray-700">Save User</button>
         <input ref={fileInputRef} type="file" onChange={importUserData} accept=".json" className="hidden" />
-        <button onClick={handleFileInputClick} type="button" className="text-white p-3 w-48 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-m px-5 py-2.5  mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Load User</button>
+        <button onClick={handleFileInputClick} type="button" className="text-white p-3 w-48 bg-teal-800 hover:bg-teal-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-m px-5 py-2.5  mb-2 dark:bg-sky-800 dark:hover:bg-sky-700 dark:focus:ring-gray-700 dark:border-gray-700">Load User</button>
         <button onClick={() => setShowModal(true)} id="button" type="submit" className="bg-purple-600 shadow-xl hover:bg-purple-500 p-3 w-48 font-medium rounded-lg text-m py-2.5  mb-2">Bulk Add Songs</button>
         <button onClick={() => onExportButtonClick()} id="button" type="submit" className="bg-green-600 shadow-xl hover:bg-green-500 p-3 w-48 font-medium rounded-lg text-m py-2.5  mb-2">Export Songs to CSV</button>
         <button onClick={() => exportItunesPlaylist()} id="button" type="submit" className="bg-slate-600 shadow-xl hover:bg-slate-500 p-3 w-48 font-medium rounded-lg text-m py-2.5  mb-2">Create Apple Playlist</button>
