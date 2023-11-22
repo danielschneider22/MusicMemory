@@ -1,13 +1,13 @@
 'use client';
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 
 interface Props{
     list: string[],
-    className: string
+    className: string,
+    setList: Dispatch<SetStateAction<string[]>>
 }
 
-export default function TypeList( { list, className }: Props) {
-    console.log(list[3])
+export default function TypeList( { list, className, setList }: Props) {
     return (
         <div className={`flex gap-4 flex-wrap ${className}`}> 
             {list.map((item) => 
@@ -20,7 +20,7 @@ export default function TypeList( { list, className }: Props) {
                         className="absolute top-1 right-1 mx-px mt-[0.5px] w-max rounded-md bg-pink-800 transition-colors hover:bg-pink-900"
                         data-dismissible-target="chip"
                     >
-                        <div role="button" className="h-5 w-5 p-1">
+                        <div role="button" onClick={() => setList(list.filter((i) => i !== item))} className="h-5 w-5 p-1">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"

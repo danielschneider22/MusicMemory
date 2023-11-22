@@ -59,22 +59,38 @@ const Footer = ({gridAPI}: {gridAPI: any}) => {
       const quotedElements: string[] = data.songList.map(element => `"${element.name}"`);
       const result: string = quotedElements.join(', ');
       const content = `
+      -- AppleScript to create a playlist in iTunes
+
+      -- Define the playlist name and the list of songs
       set playlistName to "${generalInfoData.firstName} ${generalInfoData.lastName}'s playlist"
-      
-      set songTitles to {${result}}
-      
-      tell application "iTunes"
-          -- Create a new playlist
-          set newPlaylist to make new playlist with properties {name:playlistName}
-          
-          -- Add songs to the playlist
-          repeat with title in songTitles
-              try
-                  set trackToAdd to first track of library playlist 1 whose name is title
-                  duplicate trackToAdd to newPlaylist
-              end try
-          end repeat
-      end tell`;
+      set songList to {${result}}
+
+      -- Check if iTunes is running
+      tell application "System Events"
+        if (name of processes) contains "Music" then
+          -- Music is running
+          tell application "Music"
+            -- Create a new playlist
+            set newPlaylist to make new user playlist with properties {name:playlistName}
+            
+            -- Add songs to the playlist
+            repeat with songTitle in songList
+              set foundTracks to search library playlist 1 for songTitle
+              if (count of foundTracks) > 0 then
+                set newTrack to duplicate (item 1 of foundTracks) to newPlaylist
+              else
+                display dialog "Song not found: " & songTitle
+              end if
+            end repeat
+            
+            display dialog "Playlist created successfully!"
+          end tell
+        else
+          -- Music is not running
+          display dialog "iTunes is not running. Please start Music and run the script again."
+        end if
+      end tell
+      `;
 
       // Create a Blob with the text content
       const blob = new Blob([content], { type: 'text/plain' });

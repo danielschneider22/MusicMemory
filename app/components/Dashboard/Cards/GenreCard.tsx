@@ -37,7 +37,7 @@ export default function GenreCard() {
                 }}
                 disabled={!data.currAge}
             />
-          <GenreSubmission disabled={!data.currAge} />
+          <GenreSubmission disabled={!data.currAge} genre={genre.label} setGenre={setGenre} />
     </div>
     )
   }
