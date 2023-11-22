@@ -22,11 +22,14 @@ export default function GenreSubmission({ disabled, genre, setGenre, setLoading 
     const getGenreSongs = async () => {
       setLoading(true)
       try{
+        const currYear = new Date().getFullYear()
+        const lowerDate = currYear - (generalInfoData.currAge! - generalInfoData.lowerAge)
+        const upperDate = currYear - (generalInfoData.currAge! - generalInfoData.upperAge)
         const body = {
-          genre: "Rock",
-          numRequested: 5,
-          lowerDate: 1935,
-          upperDate: 1965
+          genre,
+          numRequested: numSongs,
+          lowerDate,
+          upperDate
         }
         const response = await fetch("/api/genreSongs", { body: JSON.stringify(body), method: "POST" })
         const json = await response.json();
@@ -37,7 +40,7 @@ export default function GenreSubmission({ disabled, genre, setGenre, setLoading 
           setTimeout(() => {
             spotifySearchTrack(song, 1).then((result) => {
               setData!((prevData) => {
-                const newSongList = filterUniqueSongs([...prevData.songList, result[0]])
+                const newSongList = filterUniqueSongs([...prevData.songList, {...result[0], type: "Genre Picker"}])
                 return { ...prevData, songList: newSongList };
               });
             })

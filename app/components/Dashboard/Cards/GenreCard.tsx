@@ -39,7 +39,7 @@ export default function GenreCard() {
                 }}
                 disabled={!data.currAge || loading}
             />
-          <GenreSubmission disabled={!data.currAge || loading} genre={genre.label} setGenre={setGenre} setLoading={setLoading} />
+          <GenreSubmission disabled={!data.currAge || loading} genre={genre?.label} setGenre={setGenre} setLoading={setLoading} />
     </div>
     )
   }
