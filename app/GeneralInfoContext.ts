@@ -5,7 +5,9 @@ export interface GeneralInfo {
     lastName: string,
     currAge: number | null,
     lowerAge: number,
-    upperAge: number
+    upperAge: number,
+    genres: string[],
+    artists: string[]
 }
 
 export interface GeneralInfoType {
@@ -13,4 +15,4 @@ export interface GeneralInfoType {
     setData?: Dispatch<SetStateAction<GeneralInfo>>;
 }
 
-export const GeneralInfoContext = createContext<GeneralInfoType>({ data: { firstName: "", lastName: "", lowerAge: 8, upperAge: 30, currAge: null}, setData: undefined});
+export const GeneralInfoContext = createContext<GeneralInfoType>({ data: { firstName: "", lastName: "", lowerAge: 8, upperAge: 30, currAge: null, genres: [], artists: []}, setData: undefined});

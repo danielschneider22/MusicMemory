@@ -1,10 +1,9 @@
 'use client';
-import { Dispatch, SetStateAction, useState } from "react"
 
 interface Props{
     list: string[],
     className: string,
-    setList: Dispatch<SetStateAction<string[]>>
+    setList: (newList: string[]) => void
 }
 
 export default function TypeList( { list, className, setList }: Props) {

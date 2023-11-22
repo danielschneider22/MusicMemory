@@ -16,7 +16,7 @@ export async function POST(request: NextRequest){
         "messages": [
         {
             "role": "user",
-            "content": "Output " + numRequested + " popular songs with the genre " + genre + " released between " + lowerDate + " and " + upperDate + ". Do not number the outputted songs and do not include the artist name. The format of this output should be [`Song A`, `Song B`, `Song C`]"
+            "content": "Output " + numRequested + " popular songs with the genre " + genre + " released between " + lowerDate + " and " + upperDate + ". Do not number the outputted songs and do not include the artist name. The format of this output should be Song A\nSong B\nSong C"
         }
         ],
         "temperature": 0.7,
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest){
     const responseInfo = await response.json()
     const responseText = responseInfo.choices[0].message.content;
     try{
-        const songArray = JSON.parse(responseText)
+        const songArray = responseText.split("\n").map((song: string) => song.replace(/[\d]+\./g, "").trim());
         return NextResponse.json({ songs: songArray })
     } catch(e) {
         return NextResponse.json({ error: e, responseText }, { status: 400 })
