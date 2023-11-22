@@ -279,7 +279,7 @@ export const artistList = [
         "label": "Bee Gees"
     },
     {
-        "label": "Beatles"
+        "label": "The Beatles"
     },
     {
         "label": "Chubby Checker"
@@ -309,7 +309,7 @@ export const artistList = [
         "label": "Jerry Lee Lewis"
     },
     {
-        "label": "Rolling Stones"
+        "label": "The Rolling Stones"
     },
     {
         "label": "Roy Orbison"

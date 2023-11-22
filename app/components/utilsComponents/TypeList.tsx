@@ -13,6 +13,7 @@ export default function TypeList( { list, className, setList }: Props) {
                 <div
                     className="w-fit center relative inline-block select-none whitespace-nowrap rounded-lg bg-gradient-to-tr from-pink-600 to-pink-400 py-2 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white"
                     data-dismissible="chip"
+                    key={item}
                     >
                     <div className="mr-5 mt-px">{item}</div>
                     <div
