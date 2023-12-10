@@ -2,10 +2,10 @@
 
 import { GeneralInfoContext } from '@/app/GeneralInfoContext';
 import { SpotifyContext } from '@/app/spotify/SpotifyProvider';
-import { spotifySearchTrack } from '@/app/spotify/api';
 import { filterUniqueSongs } from '@/app/utils';
 import React, { ChangeEvent, useContext, useRef, useState } from 'react'
 import Modal from '../Modal/Modal';
+import { itunesSongs } from '@/app/songs';
 
 const Footer = ({gridAPI}: {gridAPI: any}) => {
     const { data, setData } = useContext(SpotifyContext)!;
@@ -56,7 +56,7 @@ const Footer = ({gridAPI}: {gridAPI: any}) => {
     };
 
     const exportItunesPlaylist = () => {
-      const quotedElements: string[] = data.songList.map(element => `"${element.name}"`);
+      const quotedElements: string[] = data.songList.map(element => `"${element.title}"`);
       const result: string = quotedElements.join(', ');
       const content = `
       -- AppleScript to create a playlist in iTunes
@@ -114,29 +114,37 @@ const Footer = ({gridAPI}: {gridAPI: any}) => {
 
     const bulkUploadSongs = (text: string) => {
       text.split("\n").forEach((song) => {
-        spotifySearchTrack(song, 5).then((tracks) => {
-          const origTracks = tracks.sort((a, b) => {
-            const dateA = new Date(a.date);
-            const dateB = new Date(b.date);
-
-            if (dateA < dateB) {
-              return -1;
-            } else if (dateA > dateB) {
-              return 1;
-            } else {
-              return 0;
-            }
-          })
-          if(origTracks) {
-            setData!((prevData) => {
-              const newSongList = filterUniqueSongs([...prevData.songList, origTracks[0]])
-              return { ...prevData, songList: newSongList };
-            });
-          }
-          
-        })
+        const foundSong = itunesSongs.find((iSong) => iSong.title.toLowerCase() === song.toLowerCase());
+        if(foundSong){
+          setData!((prevData) => {
+            const newSongList = filterUniqueSongs([...prevData.songList, foundSong])
+            return { ...prevData, songList: newSongList };
+          });
+        }
       })
-    };
+      //   spotifySearchTrack(song, 5).then((tracks) => {
+      //     const origTracks = tracks.sort((a, b) => {
+      //       const dateA = new Date(a.date);
+      //       const dateB = new Date(b.date);
+
+      //       if (dateA < dateB) {
+      //         return -1;
+      //       } else if (dateA > dateB) {
+      //         return 1;
+      //       } else {
+      //         return 0;
+      //       }
+      //     })
+      //     if(origTracks) {
+      //       setData!((prevData) => {
+      //         const newSongList = filterUniqueSongs([...prevData.songList, origTracks[0]])
+      //         return { ...prevData, songList: newSongList };
+      //       });
+      //     }
+          
+      //   })
+      // })
+    }
 
     const placeholderText = "Stairway to Heaven\nHey Jude\nEye Of The Tiger";
 

@@ -3,9 +3,9 @@
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import TypeList from "../../utilsComponents/TypeList";
 import { GeneralInfoContext } from "@/app/GeneralInfoContext";
-import { spotifySearchTrack } from "@/app/spotify/api";
 import { filterUniqueSongs } from "@/app/utils";
 import { SpotifyContext } from "@/app/spotify/SpotifyProvider";
+import { itunesSongs } from "@/app/songs";
 
 interface Props {
   disabled: boolean,
@@ -37,14 +37,21 @@ export default function GenreSubmission({ disabled, genre, setGenre, setLoading 
         setGenre({ label: ""})
         setLoading(false)
         json.songs.forEach((song: string, i: number) => {
-          setTimeout(() => {
-            spotifySearchTrack(song, 1).then((result) => {
-              setData!((prevData) => {
-                const newSongList = filterUniqueSongs([...prevData.songList, {...result[0], type: "Genre Picker"}])
-                return { ...prevData, songList: newSongList };
-              });
-            })
-          }, i * 100);
+          const foundSong = itunesSongs.find((iSong) => iSong.title.toLowerCase().includes(song.toLowerCase()));
+          if(foundSong) {
+            setData!((prevData) => {
+              const newSongList = filterUniqueSongs([...prevData.songList, {...foundSong, type: "Genre Picker"}])
+              return { ...prevData, songList: newSongList };
+            });
+          }
+          // setTimeout(() => {
+          //   spotifySearchTrack(song, 1).then((result) => {
+          //     setData!((prevData) => {
+          //       const newSongList = filterUniqueSongs([...prevData.songList, {...result[0], type: "Genre Picker"}])
+          //       return { ...prevData, songList: newSongList };
+          //     });
+          //   })
+          // }, i * 100);
         })
       } catch(e) {
         setLoading(false)

@@ -7,6 +7,7 @@ import { artistList } from "./ArtistList";
 import TextField from "@mui/material/TextField";
 import TypeList from "../../utilsComponents/TypeList";
 import { GeneralInfoContext } from "@/app/GeneralInfoContext";
+import { itunesSongs } from "@/app/songs";
 
 export default function ArtistCard() {
     const [ artist, setArtist ] = useState({ label: "" })
@@ -15,18 +16,24 @@ export default function ArtistCard() {
     const { data: generalInfoData, setData: setGeneralInfoData } = useContext(GeneralInfoContext)!;
 
     const addArtistSongs = () => {
-      spotifySearchTrack(`artist:${artist.label}`, numToGenerate).then((tracks) => {
-        if(tracks) {
-          const filteredTracks = tracks.filter((track) => track.artist.toLowerCase() === artist.label.toLowerCase())
-          setData!((prevData) => {
-            const newSongList = filterUniqueSongs([...prevData.songList, ...filteredTracks]).map((track) => {return {...track, type: "Artist Picker"}})
-            return { ...prevData, songList: newSongList };
-          });
-          setGeneralInfoData!({...generalInfoData, artists: [...generalInfoData.artists, artist.label]})
-          setArtist({ label: "" })
-        }
-        
-      })
+      // spotifySearchTrack(`artist:${artist.label}`, numToGenerate).then((tracks) => {
+      //   if(tracks) {
+      //     const filteredTracks = tracks.filter((track) => track.artist.toLowerCase() === artist.label.toLowerCase())
+      //     setData!((prevData) => {
+      //       const newSongList = filterUniqueSongs([...prevData.songList, ...filteredTracks]).map((track) => {return {...track, type: "Artist Picker"}})
+      //       return { ...prevData, songList: newSongList };
+      //     });
+      //     setGeneralInfoData!({...generalInfoData, artists: [...generalInfoData.artists, artist.label]})
+      //     setArtist({ label: "" })
+      //   }
+      // })
+      const artistSongs = itunesSongs.filter((iSong) => iSong.artist.toLowerCase().includes(artist.label.toLowerCase()))
+      setData!((prevData) => {
+        const newSongList = filterUniqueSongs([...prevData.songList, ...artistSongs]).map((track) => {return {...track, type: "Artist Picker"}})
+        return { ...prevData, songList: newSongList };
+      });
+      setGeneralInfoData!({...generalInfoData, artists: [...generalInfoData.artists, artist.label]})
+      setArtist({ label: "" })
     };
     function setArtists(artists: string[]) {
       setGeneralInfoData!({...generalInfoData, artists: artists})

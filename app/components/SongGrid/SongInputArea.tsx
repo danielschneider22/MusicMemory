@@ -4,15 +4,14 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useContext, useState } from 'react';
-import { SpotifyTrack, spotifySearchTrack } from '@/app/spotify/api';
 import { SpotifyContext } from '@/app/spotify/SpotifyProvider';
 import { filterUniqueSongs } from '@/app/utils';
+import { Song, itunesSongs } from '@/app/songs';
 
-const getOptionLabel = (option: SpotifyTrack) => `${option.name} - ${option.artist}`;
+const getOptionLabel = (option: Song) => `${option.title} - ${option.artist} (${option.album})`;
 
 export default function SongInputArea() {
-    const [selectedSong, setSelectedSong] = useState<SpotifyTrack | null>(null);
-    const [options, setOptions] = useState<SpotifyTrack[]>([])
+    const [selectedSong, setSelectedSong] = useState<Song | null>(null);
     const { data, setData } = useContext(SpotifyContext)!;
 
     return (
@@ -22,7 +21,7 @@ export default function SongInputArea() {
                 <CssBaseline />
                 <Autocomplete
                     blurOnSelect={true}
-                    options={options}
+                    options={itunesSongs}
                     getOptionLabel={getOptionLabel}
                     value={selectedSong}
                     sx={{ width: '100%', color: "white" }}
@@ -37,13 +36,13 @@ export default function SongInputArea() {
                         setSelectedSong(null)
                       }
                     }}
-                    onInputChange={(e, value) => {
-                      if(value.length >= 3) {
-                        spotifySearchTrack(value, 10).then((data) => {
-                          setOptions(data);
-                        })
-                      }
-                    }}
+                    // onInputChange={(e, value) => {
+                    //   if(value.length >= 3) {
+                    //     spotifySearchTrack(value, 10).then((data) => {
+                    //       setOptions(data);
+                    //     })
+                    //   }
+                    // }}
                 />
                 </div>
             </div>

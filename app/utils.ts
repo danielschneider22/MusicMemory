@@ -1,9 +1,9 @@
-import { SpotifyTrack } from "./spotify/api";
+import { Song } from "./songs";
 
-export function filterUniqueSongs(songList: SpotifyTrack[]) {
+export function filterUniqueSongs(songList: Song[]) {
     return songList.filter(
         (song, index, self) =>
           index ===
-          self.findIndex((s) => s.name === song.name && s.artist === song.artist)
+          self.findIndex((s) => s.title === song.title && s.artist === song.artist)
     );
 }

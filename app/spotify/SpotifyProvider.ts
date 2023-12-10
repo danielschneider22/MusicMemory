@@ -1,9 +1,10 @@
 import { Dispatch, SetStateAction, createContext } from "react";
 import { SpotifyTrack } from "./api";
+import { Song } from "../songs";
 
 export interface SpotifyData {
     bearerToken: string,
-    songList: SpotifyTrack[],
+    songList: Song[],
 }
 
 export interface SpotifyProviderType {
