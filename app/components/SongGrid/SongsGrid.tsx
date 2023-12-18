@@ -20,6 +20,11 @@ const gridOptions = {
 export default function SongsGrid({setGridAPI}: Props) {
     const { data, setData } = useContext(SpotifyContext)!;
     const columnDefs: (ColDef<Song, any>)[] = [
+        {
+          headerName: "",
+          valueGetter: "node.rowIndex + 1",
+          width: 30
+        },
         { headerName: 'Song', field: "title", sortable: true, filter: true, resizable: true, width: 300 },
         { headerName: 'Artist', field: "artist", sortable: true, filter: true, resizable: true, width: 150 },
         { headerName: 'Album', field: "album", sortable: true, filter: true, resizable: true, width: 100 }, 
@@ -34,7 +39,7 @@ export default function SongsGrid({setGridAPI}: Props) {
           headerName: 'Actions',
           cellRenderer: RemoveButtonRenderer,
           width: 100,
-        },
+        }
     ];
     
     return (
