@@ -17,9 +17,14 @@ const gridOptions = {
   },
 }
 
+interface SongExtended extends Song {
+  yesno: string,
+  reactionnotes: string
+}
+
 export default function SongsGrid({setGridAPI}: Props) {
     const { data, setData } = useContext(SpotifyContext)!;
-    const columnDefs: (ColDef<Song, any>)[] = [
+    const columnDefs: (ColDef<SongExtended, any>)[] = [
         {
           headerName: "",
           valueGetter: "node.rowIndex + 1",
@@ -35,6 +40,8 @@ export default function SongsGrid({setGridAPI}: Props) {
         //     return formattedDate;
         // } },
         { headerName: 'Genre', field: "genre", sortable: true, filter: true, resizable: true, width: 120 },
+        { headerName: 'Y/N', field: "yesno", hide: true },
+        { headerName: 'Reaction Notes', field: "reactionnotes", hide: true },
         {
           headerName: 'Actions',
           cellRenderer: RemoveButtonRenderer,

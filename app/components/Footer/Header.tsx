@@ -51,6 +51,7 @@ const Footer = ({gridAPI}: {gridAPI: any}) => {
       const params = {
         fileName: `${generalInfoData.firstName}_${generalInfoData.lastName}.csv`,
         columnSeparator: ',',
+        columnKeys: ["artist", "title", "album", "genre", "yesno", "reactionnotes"]
       };
       gridAPI.exportDataAsCsv(params);
     };

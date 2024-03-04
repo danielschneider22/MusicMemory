@@ -3,7 +3,7 @@
 interface Props{
     list: string[],
     className: string,
-    setList: (newList: string[]) => void
+    setList: (newList: string[], i: string) => void
 }
 
 export default function TypeList( { list, className, setList }: Props) {
@@ -20,7 +20,7 @@ export default function TypeList( { list, className, setList }: Props) {
                         className="absolute top-1 right-1 mx-px mt-[0.5px] w-max rounded-md bg-pink-800 transition-colors hover:bg-pink-900"
                         data-dismissible-target="chip"
                     >
-                        <div role="button" onClick={() => setList(list.filter((i) => i !== item))} className="h-5 w-5 p-1">
+                        <div role="button" onClick={() => setList(list.filter((i) => i !== item), item)} className="h-5 w-5 p-1">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"

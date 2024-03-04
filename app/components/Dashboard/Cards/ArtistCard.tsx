@@ -35,8 +35,11 @@ export default function ArtistCard() {
       setGeneralInfoData!({...generalInfoData, artists: [...generalInfoData.artists, artist.label]})
       setArtist({ label: "" })
     };
-    function setArtists(artists: string[]) {
-      setGeneralInfoData!({...generalInfoData, artists: artists})
+    
+    function setArtists(artists: string[], removedArtist: string) {
+      const songList = data.songList.filter((song) => !song.artist.toLowerCase().includes(removedArtist.toLowerCase()));
+      setGeneralInfoData!({...generalInfoData, artists: artists});
+      setData!({...data, songList});
     }
     return (
       <div className={"bg-gray-800 rounded-lg shadow-lg text-gray-200 pt-8 pb-8"}>
