@@ -23,6 +23,7 @@ export async function getSpotifyAccessToken(): Promise<SpotifyBearerToken> {
     name: string;
     artists: { name: string }[]
     album: { name: string, release_date: string }
+    popularity: number
   }
 
   export interface SpotifyTrack {
@@ -30,7 +31,8 @@ export async function getSpotifyAccessToken(): Promise<SpotifyBearerToken> {
     artist: string,
     album: string,
     date: string,
-    type: string
+    type: string,
+    popularity: number
   }
 
   export async function spotifySearchTrack(search: string, limit: number): Promise<SpotifyTrack[]> {
@@ -63,7 +65,7 @@ export async function getSpotifyAccessToken(): Promise<SpotifyBearerToken> {
       }
   
       const data: {tracks: {items: ISpotifyTrack[]}} = await response.json();
-      const mapped = data?.tracks?.items?.map((track) => { return { name: track.name, artist: track.artists[0].name, album: track.album.name, date: track.album.release_date, type: "User Chosen" }}) || [];
+      const mapped = data?.tracks?.items?.map((track) => { return { name: track.name, artist: track.artists[0].name, album: track.album.name, date: track.album.release_date, popularity: track.popularity, type: "User Chosen" }}) || [];
       return mapped.filter(
         (song, index, self) =>
           index ===

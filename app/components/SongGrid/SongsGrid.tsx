@@ -28,7 +28,7 @@ export default function SongsGrid({setGridAPI}: Props) {
         {
           headerName: "",
           valueGetter: "node.rowIndex + 1",
-          width: 30
+          width: 70
         },
         { headerName: 'Song', field: "title", sortable: true, filter: true, resizable: true, width: 300 },
         { headerName: 'Artist', field: "artist", sortable: true, filter: true, resizable: true, width: 150 },
