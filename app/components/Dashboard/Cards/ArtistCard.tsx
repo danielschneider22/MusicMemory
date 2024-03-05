@@ -1,5 +1,5 @@
 import { SpotifyContext } from "@/app/spotify/SpotifyProvider";
-import { spotifySearchTrack } from "@/app/spotify/api";
+import { SpotifyTrack, spotifySearchTrack } from "@/app/spotify/api";
 import { filterUniqueSongs } from "@/app/utils";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useContext, useState } from "react";
@@ -25,6 +25,36 @@ export default function ArtistCard() {
       setArtist({ label: "" })
     }
 
+    function removeSimilarSongs(songList: SpotifyTrack[]) {
+      const nonRepeatingList: SpotifyTrack[] = [];
+  
+      // Helper function to check similarity
+      function isSimilar(str1: string, str2: string): boolean {
+          // You can implement more sophisticated similarity checks here
+          return str2.toLowerCase().includes(str1.toLowerCase()) ;
+      }
+  
+      // Iterate through the song list
+      for (const song of songList) {
+          let isUnique = true;
+  
+          // Check against existing songs in nonRepeatingList
+          for (const existingSong of nonRepeatingList) {
+              if (isSimilar(song.name, existingSong.name)) {
+                  isUnique = false;
+                  break;
+              }
+          }
+  
+          // If not similar to any existing song, add to the nonRepeatingList
+          if (isUnique) {
+              nonRepeatingList.push(song);
+          }
+      }
+  
+      return nonRepeatingList;
+  }
+
     const addArtistSongs = () => {
       const artistSongs = itunesSongs.filter((iSong) => iSong.artist.toLowerCase().includes(artist.label.toLowerCase()))
       if(showAllOfArtist || artistSongs.length <= numToGenerate) {
@@ -32,13 +62,16 @@ export default function ArtistCard() {
       } else {
         spotifySearchTrack(`artist:${artist.label}`, 50).then((tracks) => {
           if(tracks) {
-            const spotifyTracks = tracks.filter((track) => track.artist.toLowerCase() === artist.label.toLowerCase())
+            let spotifyTracks = tracks.filter((track) => track.artist.toLowerCase() === artist.label.toLowerCase())
             const artistSongs = itunesSongs.filter((iSong) => iSong.artist.toLowerCase().includes(artist.label.toLowerCase()))
+            spotifyTracks = removeSimilarSongs(spotifyTracks);
             // Filter out songs from arrayA that are also present in arrayB
-            const filteredSongs = artistSongs.filter(song => spotifyTracks.some((t) => song.title.toLowerCase() === t.name.toLowerCase()));
+            let filteredSongs = artistSongs.filter(song => spotifyTracks.some((t) => t.name.includes(song.title)));
 
             // Sort the filtered songs by popularity
-            filteredSongs.sort((a, b) => spotifyTracks.find((t) => t.name.toLowerCase() === b.title.toLowerCase())!.popularity - spotifyTracks.find((t) => t.name.toLowerCase() === a.title.toLowerCase())!.popularity);
+            filteredSongs.sort((a, b) => {
+              return spotifyTracks.find((t) => t.name.toLowerCase().includes(b.title.toLowerCase()))!.popularity - spotifyTracks.find((t) => t.name.toLowerCase().includes(a.title.toLowerCase()))!.popularity;
+            });
 
             // Get the songs from arrayA that are not in arrayB
             const remainingSongs = artistSongs.filter(song => !spotifyTracks.some((t) => song.title.toLowerCase() === t.name.toLowerCase()));
