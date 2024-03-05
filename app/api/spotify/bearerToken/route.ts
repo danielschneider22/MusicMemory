@@ -34,5 +34,9 @@ export async function GET(){
     } catch (error) {
       console.error('Error fetching Spotify access token:', error);
     }
-    return NextResponse.json({ bearerToken })
+    const headers = {
+      'Cache-Control': 'no-store, max-age=0'
+    };
+
+    return NextResponse.json({ bearerToken }, { headers })
 }
