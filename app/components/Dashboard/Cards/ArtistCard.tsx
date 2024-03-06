@@ -89,6 +89,10 @@ export default function ArtistCard() {
       setGeneralInfoData!({...generalInfoData, artists: artists});
       setData!({...data, songList});
     }
+
+    let css = "peer-focus:font-medium absolute text-sm  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 disabled:text-gray-200 text-gray-400";
+    if(showAllOfArtist)
+      css += " text-gray-600"
     return (
       <div className={"bg-gray-800 rounded-lg shadow-lg text-gray-200 pt-8 pb-8"}>
           <h1 className="text-center mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Artists</h1>
@@ -109,10 +113,11 @@ export default function ArtistCard() {
                     onInputChange={(e, value) => {
                       setArtist({ label: value })
                     }}
+                    clearIcon={false}
                 />
               <div className="relative z-0 w-full group text-left pl-8 pr-8">
-                <input type="number" max={50} value={numToGenerate} onChange={(ev) => setNumToGenerate(Math.min(Number(ev.currentTarget.value), 50))} name="floating_num_to_generate" id="floating_num_to_generate" className="block py-2.5 px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label htmlFor="floating_num_to_generate" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"># Songs to Generate</label>
+                <input disabled={showAllOfArtist} type="number" max={50} value={numToGenerate} onChange={(ev) => setNumToGenerate(Math.min(Number(ev.currentTarget.value), 50))} name="floating_num_to_generate" id="floating_num_to_generate" className="block py-2.5 px-0 w-full text-md bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer  text-white disabled:text-gray-600" placeholder=" " required />
+                <label htmlFor="floating_num_to_generate" className={css}># Songs to Generate</label>
               </div>
               <div className="relative z-0 w-full group text-left pl-8 pr-8">
                 <input type="checkbox" checked={showAllOfArtist} onChange={(ev) => toggleAllOfArtist(ev.target.checked)} name="floating_all_of_artist" id="floating_all_of_artist"  placeholder=" " required />
