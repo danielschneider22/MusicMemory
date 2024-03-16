@@ -5,13 +5,15 @@ import { SpotifyContext } from '@/app/spotify/SpotifyProvider';
 import { filterUniqueSongs } from '@/app/utils';
 import React, { ChangeEvent, useContext, useRef, useState } from 'react'
 import Modal from '../Modal/Modal';
-import { itunesSongs } from '@/app/songs';
+import { Song, itunesSongs } from '@/app/songs';
+import SongChoicesModal from '../Modal/SongChoicesModal';
 
 const Footer = ({gridAPI}: {gridAPI: any}) => {
     const { data, setData } = useContext(SpotifyContext)!;
     const { data: generalInfoData, setData: setGeneralInfoData } = useContext(GeneralInfoContext)!;
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [modalShown, setShowModal] = useState(false)
+    const [songChoices, setSongChoices] = useState<Song[][]>([])
 
     const exportUserData = () => {
       const userData = {generalInfoData, songList: data.songList}
@@ -57,7 +59,7 @@ const Footer = ({gridAPI}: {gridAPI: any}) => {
     };
 
     const exportItunesPlaylist = () => {
-      const quotedElements: string[] = data.songList.map(element => `"${element.title}"`);
+      const quotedElements: string[] = data.songList.map(element => `"${element.title.replace(/"/g, '\\"')}"`);
       const result: string = quotedElements.join(', ');
       const content = `
       -- AppleScript to create a playlist in iTunes
@@ -113,38 +115,27 @@ const Footer = ({gridAPI}: {gridAPI: any}) => {
       document.body.removeChild(link);
     };
 
+    const selectSong = (song: Song) => {
+      setData!((prevData) => {
+        const newSongList = filterUniqueSongs([...prevData.songList, song])
+        return { ...prevData, songList: newSongList };
+      });
+    }
+
     const bulkUploadSongs = (text: string) => {
+      const issueSongs: Song[][] = []
       text.split("\n").forEach((song) => {
-        const foundSong = itunesSongs.find((iSong) => iSong.title.toLowerCase() === song.toLowerCase());
-        if(foundSong){
-          setData!((prevData) => {
-            const newSongList = filterUniqueSongs([...prevData.songList, foundSong])
-            return { ...prevData, songList: newSongList };
-          });
+        const foundSongs = itunesSongs.filter((iSong) => iSong.title.toLowerCase().includes(song.toLowerCase()));
+        if(foundSongs.length === 1){
+          selectSong(foundSongs[0])
+        } else {
+          issueSongs.push(foundSongs);
         }
       })
-      //   spotifySearchTrack(song, 5).then((tracks) => {
-      //     const origTracks = tracks.sort((a, b) => {
-      //       const dateA = new Date(a.date);
-      //       const dateB = new Date(b.date);
-
-      //       if (dateA < dateB) {
-      //         return -1;
-      //       } else if (dateA > dateB) {
-      //         return 1;
-      //       } else {
-      //         return 0;
-      //       }
-      //     })
-      //     if(origTracks) {
-      //       setData!((prevData) => {
-      //         const newSongList = filterUniqueSongs([...prevData.songList, origTracks[0]])
-      //         return { ...prevData, songList: newSongList };
-      //       });
-      //     }
-          
-      //   })
-      // })
+      
+      if(issueSongs.length > 0) {
+        setSongChoices(issueSongs);
+      }
     }
 
     const placeholderText = "Stairway to Heaven\nHey Jude\nEye Of The Tiger";
@@ -160,6 +151,7 @@ const Footer = ({gridAPI}: {gridAPI: any}) => {
         <button onClick={() => exportItunesPlaylist()} id="button" type="submit" className="bg-slate-600 shadow-xl hover:bg-slate-500 p-3 w-48 font-medium rounded-lg text-m py-2.5  mb-2">Create Apple Playlist</button>
       </div>
       {modalShown && <Modal closeModal={() => setShowModal(false)} placeholder={placeholderText} header={"Bulk Add Songs"} onSubmit={(text) => { bulkUploadSongs(text); setShowModal(false)}}/>}
+      {songChoices.length > 0 && <SongChoicesModal songChoice={songChoices[0]} selectSong={(song) => {selectSong(song); setSongChoices(songChoices.slice(1))}} ignoreChoice={() => setSongChoices(songChoices.slice(1))} header={"Bulk Add Songs"} />}
     </>
     
   )
