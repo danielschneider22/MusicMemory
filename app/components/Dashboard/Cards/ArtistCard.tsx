@@ -120,8 +120,8 @@ export default function ArtistCard() {
                 <label htmlFor="floating_num_to_generate" className={css}># Songs to Generate</label>
               </div>
               <div className="relative z-0 w-full group text-left pl-8 pr-8">
-                <input type="checkbox" checked={showAllOfArtist} onChange={(ev) => toggleAllOfArtist(ev.target.checked)} name="floating_all_of_artist" id="floating_all_of_artist"  placeholder=" " required />
-                <label htmlFor="floating_all_of_artist" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 ml-3">Add all songs by artist</label>
+                <input className="cursor-pointer" type="checkbox" checked={showAllOfArtist} onChange={(ev) => toggleAllOfArtist(ev.target.checked)} name="floating_all_of_artist" id="floating_all_of_artist"  placeholder=" " required />
+                <label htmlFor="floating_all_of_artist" className="cursor-pointer peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 ml-3">Add all songs by artist</label>
               </div>
               <TypeList setList={setArtists} list={generalInfoData.artists} className={"pl-4 pr-4"}/>
               <button disabled={!artist.label} onClick={() => addArtistSongs()} id="button" type="button" className="disabled:bg-indigo-800 bg-indigo-600 shadow-xl hover:bg-indigo-500 text-white font-bold rounded-full p-4 w-48 mx-auto">Add Songs</button>

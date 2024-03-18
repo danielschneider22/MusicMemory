@@ -49,8 +49,8 @@ export default function PreselectedSongsCard() {
               const checked = generalInfoData && generalInfoData.preselectedSongsLists && generalInfoData.preselectedSongsLists.some((lT) => lT === listTitle)
               return (
                 <>
-                  <input className="col-span-1" checked={checked} type="checkbox" onChange={((ev) => addOrRemoveSongs(ev, listTitle))} id={`listCheckbox-${listTitle}`} style={{marginLeft: "auto", width: 30}}></input>
-                  <label htmlFor={`listCheckbox-${listTitle}`} className="col-span-5 select-none">{listTitle}</label>
+                  <input className="col-span-1 cursor-pointer" checked={checked} type="checkbox" onChange={((ev) => addOrRemoveSongs(ev, listTitle))} id={`listCheckbox-${listTitle}`} style={{marginLeft: "auto", width: 30}}></input>
+                  <label htmlFor={`listCheckbox-${listTitle}`} className="col-span-5 select-none cursor-pointer">{listTitle}</label>
                 </>
               )
               })}
