@@ -6,6 +6,15 @@ export type Song = {
     type?: string
 }
 
+export const preselectedSongLists: {[key: string]: string[]} = {
+    "60s Rock": ["Like a Rolling Stone", "Hey Jude", "Paint It, Black", "A Day in the Life", "Light My Fire", "All Along the Watchtower", "Purple Haze", "Whole Lotta Love", "Born to Be Wild", "Fortunate Son", "White Rabbit", "Gimme Shelter", "Somebody to Love", "I Want to Hold Your Hand", "Sunshine of Your Love", "Satisfaction", "California Dreamin'", "For What It's Worth", "Piece of My Heart", "My Generation"],
+    "70s Rock": ["Stairway to Heaven", "Bohemian Rhapsody", "Hotel California", "Dream On", "Smoke on the Water", "Free Bird", "Layla", "Imagine", "Baba O'Riley", "Born to Run", "More Than a Feeling", "We Will Rock You", "Sweet Home Alabama", "American Woman", "Barracuda", "Go Your Own Way", "Riders on the Storm", "Another Brick in the Wall", "Walk This Way", "The Joker"],
+    "60s Country": ["Ring of Fire", "Stand by Your Man", "Crazy", "Okie from Muskogee", "Coal Miner's Daughter", "Folsom Prison Blues", "El Paso", "The Ballad of Jed Clampett", "Harper Valley PTA", "I Fall to Pieces", "King of the Road", "Mama Tried", "Gentle on My Mind", "Act Naturally", "Detroit City", "I Walk the Line", "Blue Moon of Kentucky", "The Race Is On", "Hello Walls", "I Can't Stop Loving You"],
+    "70s Country": ["The Gambler", "On the Road Again", "Take Me Home, Country Roads", "Blue Eyes Crying in the Rain", "He Stopped Loving Her Today", "Rhinestone Cowboy", "Delta Dawn", "Amarillo by Morning", "Luckenbach, Texas (Back to the Basics of Love)", "If You've Got the Money I've Got the Time", "The Devil Went Down to Georgia", "Before the Next Teardrop Falls", "Help Me Make It Through the Night", "Rose Garden", "Behind Closed Doors", "It Was Almost Like a Song", "You're the Reason God Made Oklahoma", "Family Tradition", "Tennessee Whiskey", "Don't It Make My Brown Eyes Blue"],
+    "60s Jazz": ["So What", "Take Five", "My Favorite Things", "A Love Supreme", "Blue Train", "Song for My Father", "Maiden Voyage", "The Girl from Ipanema", "Cantaloupe Island", "Watermelon Man", "Mercy, Mercy, Mercy", "Footprints", "St. Thomas", "All Blues", "Naima", "Work Song", "One Note Samba", "Summertime", "Afro Blue", "Straight, No Chaser"],
+    "70s Jazz": ["Chameleon", "Spain", "Birdland", "Mr. Magic", "Black Byrd", "Cantaloupe Island", "Red Clay", "Feels So Good", "The Black Angel", "Night in Tunisia", "Watermelon Man", "Aja", "Freddie Freeloader", "The Chicken", "Feels So Good", "Nica's Dream", "The Sidewinder", "Butterfly", "Driftin'", "Joy Spring"],
+}
+
 export const itunesSongs = [
     {
         "artist": "Aaron Neville",

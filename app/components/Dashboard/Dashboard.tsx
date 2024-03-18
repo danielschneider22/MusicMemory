@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from "react";
 import GeneralInfoCard from "./Cards/GeneralInfoCard";
 import GenreCard from "./Cards/GenreCard";
 import ArtistCard from "./Cards/ArtistCard";
+import PreselectedSongsCard from "./Cards/PreselectedSongsCard";
 
 export default function Dashboard() {
     return (
@@ -13,6 +13,7 @@ export default function Dashboard() {
                 <GeneralInfoCard />
                 <GenreCard />
                 <ArtistCard />
+                <PreselectedSongsCard />
             </div>
         </span>
     )
