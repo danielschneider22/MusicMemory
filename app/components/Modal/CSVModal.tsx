@@ -17,7 +17,7 @@ const songKeys = ['artist', 'title', 'album', 'genre', 'type', 'OTHER'].map((gen
 
 export default function CSVModal({header, onSubmit, placeholder, closeModal}: Props) {
     const [text, setText] = useState("")
-    const [cols, setCols] = useState([{ label: "title" }, { label: "artist" }, { label: "album" }])
+    const [cols, setCols] = useState([{ label: "OTHER" }, { label: "OTHER" }, { label: "artist" }, { label: "title" }, { label: "album" }])
     const [key, setKey] = useState(0);
     
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +74,7 @@ export default function CSVModal({header, onSubmit, placeholder, closeModal}: Pr
                     <div className="p-5">
                         {cols.map((col, i) => {
                             return (
-                                <div key={col.label} className="flex flex-row pt-5">
+                                <div key={col.label + i} className="flex flex-row pt-5">
                                     <Autocomplete
                                         blurOnSelect={true}
                                         options={songKeys}

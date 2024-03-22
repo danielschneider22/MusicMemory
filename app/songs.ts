@@ -5074,7 +5074,7 @@ const songs = [
 
     songs.forEach(song => {
         const { title, artist, album, genre } = song;
-        const key = `${title}-${artist}-${album}`;
+        const key = `${title.toLowerCase()}-${artist.toLowerCase()}-${album.toLowerCase()}`;
         
         if (!uniqueSongs[key]) {
             uniqueSongs[key] = song;

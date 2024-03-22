@@ -129,12 +129,12 @@ const Footer = ({gridAPI}: {gridAPI: any}) => {
       vals.forEach((song) => {
         let foundSongs: Song[] = itunesSongs.filter((iSong) => {
             //@ts-ignore-next-line
-            return Object.keys(song).every((key) => iSong[key].toLowerCase().includes(song[key].toLowerCase()))
+            return Object.keys(song).every((key) => key === "OTHER" || iSong[key].toLowerCase().includes(song[key].toLowerCase()))
           });
         
         if(foundSongs.length === 1){
           selectSong(foundSongs[0])
-        } else if(issueSongs.length > 1) {
+        } else if(foundSongs.length > 1) {
           issueSongs.push(foundSongs);
         }
       })
