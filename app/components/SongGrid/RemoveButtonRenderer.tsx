@@ -13,7 +13,7 @@ const RemoveButtonRenderer: React.FC<RemoveButtonRendererProps> = ({ api, node }
   
   const onRemoveButtonClicked = () => {
     const selectedRow = node.data;
-    setData!({...data, songList: data.songList.filter((song) => song.title !== selectedRow.title)})
+    setData!({...data, songList: data.songList.filter((song) => (song.title !== selectedRow.title || song.artist !== selectedRow.artist))})
   };
 
   return (
