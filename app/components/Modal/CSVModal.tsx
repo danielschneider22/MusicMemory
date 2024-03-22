@@ -74,7 +74,7 @@ export default function CSVModal({header, onSubmit, placeholder, closeModal}: Pr
                     <div className="p-5">
                         {cols.map((col, i) => {
                             return (
-                                <div className="flex flex-row pt-5">
+                                <div key={col.label} className="flex flex-row pt-5">
                                     <Autocomplete
                                         blurOnSelect={true}
                                         options={songKeys}
