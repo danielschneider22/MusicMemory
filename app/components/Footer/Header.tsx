@@ -124,30 +124,43 @@ const Footer = ({gridAPI}: {gridAPI: any}) => {
       });
     }
 
+    function removePunctuationAndNormalize(myString: string) {
+      return myString.replace(/[^\w\s]/g, '').toLowerCase();
+  }
+
     const bulkUploadCSVSongs = (vals: {[key: string]: string}[]) => {
-      const issueSongs: Song[][] = []
+      const issueSongs: Song[][] = [];
+      const notFoundSongs: string[] = [];
       vals.forEach((song) => {
         let foundSongs: Song[] = itunesSongs.filter((iSong) => {
             //@ts-ignore-next-line
-            return Object.keys(song).every((key) => key === "OTHER" || iSong[key].toLowerCase().includes(song[key].toLowerCase()))
-          });
+            return Object.keys(song).every((key) => key === "OTHER" || removePunctuationAndNormalize(iSong[key]).includes(removePunctuationAndNormalize(song[key])))
+        });
+
+        if(foundSongs.length === 0 && !["", "song", "title", "name"].some((badName) => song.title.toLowerCase() === badName)) {
+          foundSongs = itunesSongs.filter((iSong) => removePunctuationAndNormalize(iSong.title).includes(removePunctuationAndNormalize(song.title)));
+        }
         
         if(foundSongs.length === 1){
           selectSong(foundSongs[0])
         } else if(foundSongs.length > 1) {
           issueSongs.push(foundSongs);
+        } else if (foundSongs.length === 0 && song.title && !["", "song", "title", "name"].some((badName) => song.title.toLowerCase() === badName)) {
+          notFoundSongs.push(song.title)
         }
       })
       
       if(issueSongs.length > 0) {
         setSongChoices(issueSongs);
+      } if(notFoundSongs.length) {
+        window.alert("Could not find the following songs: " + (notFoundSongs.join(', ')))
       }
     }
 
     const bulkUploadSongs = (text: string) => {
       const issueSongs: Song[][] = []
       text.split("\n").forEach((song) => {
-        const foundSongs = itunesSongs.filter((iSong) => iSong.title.toLowerCase().includes(song.toLowerCase()));
+        const foundSongs = itunesSongs.filter((iSong) => removePunctuationAndNormalize(iSong.title).includes(removePunctuationAndNormalize(song)));
         if(foundSongs.length === 1){
           selectSong(foundSongs[0])
         } else {

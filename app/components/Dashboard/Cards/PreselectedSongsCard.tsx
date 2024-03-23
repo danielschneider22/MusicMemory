@@ -44,14 +44,14 @@ export default function PreselectedSongsCard() {
     return (
       <div className={"bg-gray-800 rounded-lg shadow-lg text-gray-200 pt-8 pb-8"}>
           <h1 className="text-center mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Preselected Songs</h1>
-          <div className="grid grid-cols-6 gap-4 overflow-scroll no-scrollbar" style={{maxHeight: "300px"}}>
+          <div className="w-100 h-100 overflow-scroll no-scrollbar" style={{maxHeight: "300px"}}>
             {Object.keys(preselectedSongLists).map((listTitle) => {
               const checked = generalInfoData && generalInfoData.preselectedSongsLists && generalInfoData.preselectedSongsLists.some((lT) => lT === listTitle)
               return (
-                <>
+                <span className={"grid grid-cols-6 gap-4 mb-4"} key={listTitle}>
                   <input className="col-span-1 cursor-pointer" checked={checked} type="checkbox" onChange={((ev) => addOrRemoveSongs(ev, listTitle))} id={`listCheckbox-${listTitle}`} style={{marginLeft: "auto", width: 30}}></input>
                   <label htmlFor={`listCheckbox-${listTitle}`} className="col-span-5 select-none cursor-pointer">{listTitle}</label>
-                </>
+                </span>
               )
               })}
                

@@ -34,11 +34,34 @@ export default function CSVModal({header, onSubmit, placeholder, closeModal}: Pr
         }
     };
 
+    function parseCSVRow(row: string) {
+        let columns = [];
+        let currentColumn = '';
+        let withinQuotes = false;
+    
+        for (let i = 0; i < row.length; i++) {
+            const char = row[i];
+    
+            if (char === ',' && !withinQuotes) {
+                columns.push(currentColumn.trim());
+                currentColumn = '';
+            } else if (char === '"') {
+                withinQuotes = !withinQuotes;
+            } else {
+                currentColumn += char;
+            }
+        }
+    
+        columns.push(currentColumn.trim());
+    
+        return columns;
+    }
+
     const parseCSV = (csvString: string) => {
         try{
             const rows = csvString.trim().split('\n');
             const parsedRows: any[] = rows.map((row) => {
-                const columns = row.split(',');
+                const columns = parseCSVRow(row);
                 const json: {[key: string]: string} = {}
                 cols.forEach((col, i) => {
                     json[col.label] = columns[i].trim();

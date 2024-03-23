@@ -17,7 +17,7 @@ export default function SongChoicesModal({songChoice, ignoreChoice, selectSong}:
     const columnDefs: (ColDef<Song, any>)[] = [
         { headerName: 'Song', field: "title", sortable: true, filter: true, resizable: true, width: 300 },
         { headerName: 'Artist', field: "artist", sortable: true, filter: true, resizable: true, width: 150 },
-        { headerName: 'Album', field: "album", sortable: true, filter: true, resizable: true, width: 100 }, 
+        { headerName: 'Album', field: "album", sortable: true, filter: true, resizable: true, width: 200 }, 
         { headerName: 'Genre', field: "genre", sortable: true, filter: true, resizable: true, width: 120 },
     ];
   return (
