@@ -73,6 +73,12 @@ export function spotifyDataCopyTuple(): [
   return [dataCopyRef, setDataCopy];
 }
 
+export const mockPreselectedSongLists: { [key: string]: string[] } = {
+  "60s Rock": ["Song1"],
+  "70s Rock": ["Song2"],
+  "60s Country": ["Song1", "Song2"],
+};
+
 export const mockItunesSongs = [
   {
     artist: "Mock Artist 1",
