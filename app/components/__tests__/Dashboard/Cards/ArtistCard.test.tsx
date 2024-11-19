@@ -4,40 +4,17 @@ import { AppWrapper } from "../../config/appWrapper";
 import ArtistCard from "@/app/components/Dashboard/Cards/ArtistCard";
 import userEvent from "@testing-library/user-event";
 import { artistList } from "@/app/components/Dashboard/Cards/ArtistList";
-import { dataCopyTuple, spotifyDataCopyTuple } from "../../config/initState";
+import {
+  dataCopyTuple,
+  mockItunesSongs,
+  spotifyDataCopyTuple,
+} from "../../config/initState";
 
 const mockArtistList = [
   { label: "Mock Artist 1" },
   { label: "Mock Artist 2" },
   { label: "Mock Artist 3" },
   { label: "Mock Artist 4" },
-];
-
-const mockItunesSongs = [
-  {
-    artist: "Mock Artist 1",
-    title: "Song1",
-    album: "Album1",
-    genre: "Pop",
-  },
-  {
-    artist: "Mock Artist 1",
-    title: "Song2",
-    album: "Album1",
-    genre: "Pop",
-  },
-  {
-    artist: "Mock Artist 2",
-    title: "Song1 from artist 2",
-    album: "Album2",
-    genre: "Pop",
-  },
-  {
-    artist: "Mock Artist 2",
-    title: "Song2 from artist 2",
-    album: "Album2",
-    genre: "Pop",
-  },
 ];
 
 jest.mock("../../../Dashboard/Cards/ArtistList", () => ({
