@@ -42,7 +42,7 @@ export default function GeneralInfoCard() {
   }
 
   return (
-    <form className="p-8 bg-gray-800 rounded-lg shadow-lg text-gray-200 max-h-fit fake-class">
+    <form className="p-8 bg-gray-800 rounded-lg shadow-lg text-gray-200 max-h-fit">
       <h1 className="text-center mb-8 text-xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">
         General
       </h1>
