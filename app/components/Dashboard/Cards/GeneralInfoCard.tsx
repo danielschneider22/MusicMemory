@@ -5,10 +5,37 @@ import { SpotifyContext } from "@/app/spotify/SpotifyProvider";
 import { ChangeEvent, useContext } from "react";
 import Input from "./Input";
 
+function calculateAge(dateString: string): number {
+  const birthDate = new Date(dateString);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+
+  // Adjust if the birthday hasn't occurred yet this year
+  const hasHadBirthdayThisYear =
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() &&
+      today.getDate() >= birthDate.getDate());
+
+  if (!hasHadBirthdayThisYear) {
+    age--;
+  }
+
+  return age;
+}
+
 export default function GeneralInfoCard() {
   const { data: generalInfoData, setData: setGeneralInfoData } =
     useContext(GeneralInfoContext)!;
   const { data } = useContext(SpotifyContext)!;
+
+  function changeDOB(val: string) {
+    const currAge = calculateAge(val);
+    setGeneralInfoData!({
+      ...generalInfoData,
+      dateOfBirth: val,
+      currAge: currAge > 1 && currAge < 150 ? currAge : generalInfoData.currAge,
+    });
+  }
 
   function doChange(key: string, val: string) {
     setGeneralInfoData!({ ...generalInfoData, [key]: val });
@@ -36,6 +63,16 @@ export default function GeneralInfoCard() {
             name="floating_last_name"
             id="floating_last_name"
             label="Last Name"
+          />
+        </div>
+        <div className="relative z-0 w-full mb-6 group">
+          <Input
+            value={generalInfoData.dateOfBirth || ""}
+            onChange={(e) => changeDOB(e.target.value)}
+            type="date"
+            name="floating_dob"
+            id="floating_dob"
+            label="Date of Birth"
           />
         </div>
         <div className="relative z-0 w-full mb-6 group">

@@ -7,6 +7,7 @@ export const INIT_USER_DATA = {
   lowerAge: 15,
   upperAge: 25,
   currAge: 31,
+  dateOfBirth: "1993-07-26",
   genres: [],
   artists: [],
   preselectedSongsLists: [],

@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import GeneralInfoCard from "@/app/components/Dashboard/Cards/GeneralInfoCard";
 import { GeneralInfoContext } from "@/app/GeneralInfoContext";
 import {
@@ -34,6 +34,10 @@ describe("General info card", () => {
     expect(lastNameInput).toBeInTheDocument();
     expect(lastNameInput).toHaveValue("Schneider");
 
+    const dob = screen.getByLabelText(/Date of Birth/i);
+    expect(dob).toBeInTheDocument();
+    expect(dob).toHaveValue("1993-07-26");
+
     const currAge = screen.getByLabelText(/Current Age/i);
     expect(currAge).toBeInTheDocument();
     expect(currAge).toHaveValue(31);
@@ -48,6 +52,28 @@ describe("General info card", () => {
 
     const playlistDiv = screen.getByText(/Songs in Playlist: 3/i);
     expect(playlistDiv).toBeInTheDocument();
+  });
+
+  it("changing DOB reflects properly", async () => {
+    render(
+      <AppWrapper>
+        <GeneralInfoCard />
+      </AppWrapper>
+    );
+
+    const dob = screen.getByLabelText(/Date of Birth/i);
+    expect(dob).toHaveValue("1993-07-26");
+
+    const currAge = screen.getByLabelText(/Current Age/i);
+    expect(currAge).toHaveValue(31);
+
+    await fireEvent.change(dob, { target: { value: "1992-07-26" } });
+    const currYear = new Date().getFullYear();
+
+    await waitFor(() => {
+      expect(dob).toHaveValue("1992-07-26");
+      expect(currAge).toHaveValue(currYear - 1992);
+    });
   });
 
   it("changing input changes context", async () => {
