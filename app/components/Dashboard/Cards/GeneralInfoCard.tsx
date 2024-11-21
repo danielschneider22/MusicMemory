@@ -62,7 +62,7 @@ export default function GeneralInfoCard() {
             onChange={(e) => doChange("lastName", e.target.value)}
             name="floating_last_name"
             id="floating_last_name"
-            label="Last Name"
+            label="Last LlamaName"
           />
         </div>
         <div className="relative z-0 w-full mb-6 group">
