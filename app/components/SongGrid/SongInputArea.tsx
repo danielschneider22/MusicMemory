@@ -52,6 +52,7 @@ export default function SongInputArea() {
         <div className="relative z-0 w-full mb-6 group">
           <CssBaseline />
           <Autocomplete
+            id="song-input"
             filterOptions={filterOptions}
             blurOnSelect={true}
             options={itunesSongs.sort((a, b) => customSort(a, b, ""))}

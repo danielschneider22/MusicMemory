@@ -33,6 +33,7 @@ export default function GenreCard() {
 
   return (
     <div
+      data-testid="genre-card"
       className={`p-2 pt-8 bg-gray-800 rounded-lg shadow-lg text-gray-200 text-center relative ${
         !data.currAge && "opacity-20"
       }`}
