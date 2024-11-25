@@ -108,7 +108,10 @@ export default function GeneralInfoCard() {
           />
         </div>
       </div>
-      <div className="text-center text-gray-500 dark:text-gray-400">
+      <div
+        data-testid={"song-count"}
+        className="text-center text-gray-500 dark:text-gray-400"
+      >
         Songs in Playlist: {data?.songList?.length}
       </div>
     </form>

@@ -20,8 +20,8 @@ export default function Home() {
     songList: [],
   });
   const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({
-    firstName: "Daniel",
-    lastName: "Schneider",
+    firstName: "",
+    lastName: "",
     lowerAge: 15,
     upperAge: 25,
     currAge: null,
