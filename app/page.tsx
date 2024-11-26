@@ -7,6 +7,8 @@ import { useState } from "react";
 import { SpotifyData, SpotifyContext } from "./spotify/SpotifyProvider";
 import { GeneralInfo, GeneralInfoContext } from "./GeneralInfoContext";
 import Header from "./components/Footer/Header";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const darkTheme = createTheme({
@@ -30,7 +32,6 @@ export default function Home() {
     preselectedSongsLists: [],
   });
   const [gridAPI, setGridAPI] = useState<any>();
-
   return (
     <ThemeProvider theme={darkTheme}>
       <SpotifyContext.Provider
@@ -40,6 +41,7 @@ export default function Home() {
           value={{ data: generalInfo, setData: setGeneralInfo }}
         >
           <CssBaseline />
+          <ToastContainer />
           <main className="flex flex-col h-screen">
             <Header gridAPI={gridAPI} />
             <div className="flex flex-row flex-grow">
