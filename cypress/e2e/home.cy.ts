@@ -29,7 +29,6 @@ describe("Home Page", () => {
   it("Add Song", function () {
     /* ==== Generated with Cypress Studio ==== */
     cy.visit("localhost:3000");
-    cy.get("#song-input").clear("y");
     cy.get("#song-input").click();
     cy.get("#song-input").type("yellow subm{downArrow}{enter}");
     cy.get('[data-testid="song-count"]').should(
@@ -46,10 +45,8 @@ describe("Home Page", () => {
 
   it.only("Add Multiple Songs", function () {
     cy.visit("localhost:3000");
-    cy.get("#song-input").clear("y");
     cy.get("#song-input").click();
     cy.get("#song-input").type("yellow subm{downArrow}{enter}");
-    cy.get("#song-input").clear("y");
     cy.get("#song-input").click();
     cy.get("#song-input").type("hello, dolly{downArrow}{enter}");
     cy.get('[data-testid="song-count"]').should(
