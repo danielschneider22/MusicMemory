@@ -1,7 +1,12 @@
 import { SpotifyContext } from "@/app/spotify/SpotifyProvider";
 import { ChangeEvent, useContext, useState } from "react";
 import { GeneralInfoContext } from "@/app/GeneralInfoContext";
-import { Song, itunesSongs, preselectedSongLists } from "@/app/songs";
+import {
+  Song,
+  itunesSongs,
+  preselectedSongLists,
+  preselectedSongListsArr,
+} from "@/app/songs";
 import { filterUniqueSongs } from "@/app/utils";
 
 export default function PreselectedSongsCard() {
@@ -24,7 +29,7 @@ export default function PreselectedSongsCard() {
     });
   };
 
-  function addOrRemoveSongs(
+  function doRegularPreselectedStuff(
     ev: ChangeEvent<HTMLInputElement>,
     listTitle: string
   ) {
@@ -36,14 +41,22 @@ export default function PreselectedSongsCard() {
           listTitle,
         ],
       });
+      const songsToAdd: Song[] = [];
       preselectedSongLists[listTitle].forEach((song) => {
         const foundSongs = itunesSongs.filter((iSong) =>
           iSong.title.toLowerCase().includes(song.toLowerCase())
         );
         if (foundSongs.length) {
-          selectSong(foundSongs[0]);
+          songsToAdd.push(foundSongs[0]);
         }
       });
+      if (songsToAdd.length) {
+        const newSongsList = filterUniqueSongs([
+          ...data.songList,
+          ...songsToAdd,
+        ]);
+        setData!({ ...data, songList: newSongsList });
+      }
     } else {
       setGeneralInfoData!({
         ...generalInfoData,
@@ -62,6 +75,74 @@ export default function PreselectedSongsCard() {
     }
   }
 
+  function doExtraPreselectedStuff(
+    ev: ChangeEvent<HTMLInputElement>,
+    listTitle: string
+  ) {
+    if (ev.target.checked) {
+      setGeneralInfoData!({
+        ...generalInfoData,
+        preselectedSongsLists: [
+          ...generalInfoData.preselectedSongsLists,
+          listTitle,
+        ],
+      });
+      const songsToAdd: Song[] = [];
+      preselectedSongListsArr[listTitle].forEach((songArr) => {
+        let foundSongs = itunesSongs.filter((iSong) =>
+          iSong.title.toLowerCase().includes(songArr[0].toLowerCase())
+        );
+        if (foundSongs.length === 1) {
+          songsToAdd.push(foundSongs[0]);
+        } else if (foundSongs.length > 1) {
+          foundSongs = foundSongs.filter((iSong) =>
+            iSong.artist.toLowerCase().includes(songArr[1].toLowerCase())
+          );
+          if (foundSongs.length) {
+            songsToAdd.push(foundSongs[0]);
+          } else {
+            console.log(songArr);
+          }
+        }
+      });
+      if (songsToAdd.length) {
+        const newSongsList = filterUniqueSongs([
+          ...data.songList,
+          ...songsToAdd,
+        ]);
+        setData!({ ...data, songList: newSongsList });
+      }
+    } else {
+      setGeneralInfoData!({
+        ...generalInfoData,
+        preselectedSongsLists: generalInfoData.preselectedSongsLists.filter(
+          (list) => list !== listTitle
+        ),
+      });
+      preselectedSongListsArr[listTitle].forEach((song) => {
+        const foundSongs = itunesSongs.filter((iSong) =>
+          iSong.title.toLowerCase().includes(song[0].toLowerCase())
+        );
+        if (foundSongs.length) {
+          foundSongs.forEach((rSong) => {
+            removeSong(rSong);
+          });
+        }
+      });
+    }
+  }
+
+  function addOrRemoveSongs(
+    ev: ChangeEvent<HTMLInputElement>,
+    listTitle: string
+  ) {
+    if (preselectedSongLists[listTitle]) {
+      doRegularPreselectedStuff(ev, listTitle);
+    } else {
+      doExtraPreselectedStuff(ev, listTitle);
+    }
+  }
+
   return (
     <div className={"bg-gray-800 rounded-lg shadow-lg text-gray-200 pt-8 pb-8"}>
       <h1 className="text-center mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">
@@ -72,7 +153,10 @@ export default function PreselectedSongsCard() {
         style={{ maxHeight: "300px" }}
         data-testid="preselected-songs"
       >
-        {Object.keys(preselectedSongLists).map((listTitle) => {
+        {[
+          ...Object.keys(preselectedSongLists),
+          ...Object.keys(preselectedSongListsArr),
+        ].map((listTitle) => {
           const checked =
             generalInfoData &&
             generalInfoData.preselectedSongsLists &&
