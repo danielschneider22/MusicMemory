@@ -16,6 +16,9 @@ jest.mock("../../../../songs", () => ({
   get preselectedSongLists() {
     return mockPreselectedSongLists;
   },
+  get preselectedSongListsArr() {
+    return {};
+  },
 }));
 
 describe("Preselected songs card", () => {
