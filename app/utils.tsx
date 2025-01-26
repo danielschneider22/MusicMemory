@@ -1,7 +1,10 @@
 import { toast } from "react-toastify";
 import { Song } from "./songs";
 
-export function filterUniqueSongs(songList: Song[]) {
+export function filterUniqueSongs(
+  songList: Song[],
+  showMessage: boolean = true
+) {
   const nonUniqueSongs: string[] = [];
 
   const uniqueSongs = songList.filter((song, index, self) => {
@@ -16,7 +19,7 @@ export function filterUniqueSongs(songList: Song[]) {
     return isFirstOccurrence;
   });
 
-  if (nonUniqueSongs.length > 0) {
+  if (nonUniqueSongs.length > 0 && showMessage) {
     const message = (
       <>
         The following songs were already in your list: <br />{" "}
