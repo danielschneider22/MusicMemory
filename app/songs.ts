@@ -6,7 +6,7 @@ export type Song = {
   album: string;
   genre: string;
   type?: string;
-  id: number;
+  id?: number;
 };
 
 // "Blue Moon",
