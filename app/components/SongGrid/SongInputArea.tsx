@@ -10,11 +10,36 @@ import { filterUniqueSongs } from "@/app/utils";
 import Checkbox from "@mui/material/Checkbox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import React from "react";
+import { FixedSizeList, ListChildComponentProps } from "react-window";
 
 const getOptionLabel = (option: Song) => `${option.title}`;
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
+// Custom virtualized ListBoxComponent
+const ListboxComponent = React.forwardRef<HTMLDivElement, any>(
+  function ListboxComponent(props, ref) {
+    const { children, ...other } = props;
+    const ITEM_HEIGHT = 48;
+
+    return (
+      <div ref={ref} {...other}>
+        <FixedSizeList
+          height={250} // Adjust height
+          width="100%"
+          itemSize={ITEM_HEIGHT}
+          itemCount={children.length}
+        >
+          {({ index, style }: ListChildComponentProps) => (
+            <div style={style}>{children[index]}</div>
+          )}
+        </FixedSizeList>
+      </div>
+    );
+  }
+) as React.JSXElementConstructor<any>; // 👈 Ensure compatibility
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const top100Films = [
@@ -122,6 +147,7 @@ export default function SongInputArea() {
             sx={{ width: "100%", color: "white" }}
             style={{ color: "white !important" }}
             inputValue={inputValue}
+            ListboxComponent={ListboxComponent} // Use virtualized list
             onBlur={() => {
               setMykey(mykey + 1); // Clear the selected songs
             }}
@@ -134,7 +160,7 @@ export default function SongInputArea() {
             renderOption={(props, option, { selected }) => {
               const { key, ...optionProps } = props as any;
               return (
-                <li key={key} {...optionProps}>
+                <li key={option.id} {...optionProps}>
                   <Checkbox
                     icon={icon}
                     checkedIcon={checkedIcon}
@@ -157,7 +183,7 @@ export default function SongInputArea() {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Checkboxes"
+                label="Search for a song or artist"
                 placeholder="Favorites"
               />
             )}

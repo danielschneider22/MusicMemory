@@ -1,0 +1,1 @@
+If you want to update the songs, copy songs as csv to songs.csv in root folder. Then run node csv_to_json. This will create a songs.json.
