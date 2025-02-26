@@ -30,6 +30,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-toastify": "^10.0.6",
+    "react-window": "^1.8.11",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -42,6 +43,7 @@
     "@types/node": "^20.8.10",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-window": "^1.8.8",
     "autoprefixer": "^10.0.1",
     "cypress": "^13.16.0",
     "eslint": "^8",
