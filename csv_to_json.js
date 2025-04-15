@@ -1,9 +1,9 @@
 const fs = require("fs");
 const path = require("path");
+const { parse } = require("csv-parse");
 
 const csvFilePath = path.join(__dirname, "songs.csv");
 const jsonFilePath = path.join(__dirname, "songs.json");
-let i = 0;
 
 fs.readFile(csvFilePath, "utf8", (err, data) => {
   if (err) {
@@ -11,25 +11,33 @@ fs.readFile(csvFilePath, "utf8", (err, data) => {
     return;
   }
 
-  const lines = data.split("\n").filter((line) => line.trim() !== "");
-  const jsonArray = lines.map((line) => {
-    const [artist, title, album, genre] = line.split(",");
-    i = i + 1;
+  parse(
+    data,
+    {
+      trim: true,
+      skip_empty_lines: true,
+    },
+    (err, records) => {
+      if (err) {
+        console.error("Error parsing CSV:", err);
+        return;
+      }
 
-    return {
-      artist: artist.trim(),
-      title: title.trim(),
-      album: album.trim(),
-      genre: genre.trim(),
-      id: i,
-    };
-  });
+      const jsonArray = records.map(([artist, title, album, genre], index) => ({
+        artist,
+        title,
+        album,
+        genre,
+        id: index + 1,
+      }));
 
-  fs.writeFile(jsonFilePath, JSON.stringify(jsonArray, null, 2), (err) => {
-    if (err) {
-      console.error("Error writing JSON file:", err);
-      return;
+      fs.writeFile(jsonFilePath, JSON.stringify(jsonArray, null, 2), (err) => {
+        if (err) {
+          console.error("Error writing JSON file:", err);
+          return;
+        }
+        console.log("JSON file created successfully:", jsonFilePath);
+      });
     }
-    console.log("JSON file created successfully:", jsonFilePath);
-  });
+  );
 });
