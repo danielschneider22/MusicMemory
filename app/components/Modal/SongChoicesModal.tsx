@@ -12,6 +12,15 @@ interface Props {
   songChoice: Song[];
 }
 
+/**
+ * Displays a modal dialog presenting multiple song choices in a sortable, filterable data grid.
+ *
+ * Allows users to select a song by double-clicking a row or to ignore the selection using provided controls.
+ *
+ * @param songChoice - The list of song options to display in the grid.
+ * @param selectSong - Callback invoked with the selected song when a row is double-clicked.
+ * @param ignoreChoice - Callback invoked when the user chooses to ignore the selection or closes the modal.
+ */
 export default function SongChoicesModal({
   songChoice,
   ignoreChoice,

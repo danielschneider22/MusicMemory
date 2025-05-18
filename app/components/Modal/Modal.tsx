@@ -8,7 +8,16 @@ interface Props {
   placeholder: string;
   closeModal: () => void;
 }
-// I'm a dumb comment that doesn't add anything of relevance
+/**
+ * Displays a modal dialog with a header, textarea input, and action buttons.
+ *
+ * The modal overlays the entire screen and can be closed by clicking the overlay, the close button, or the Cancel button. The Submit button invokes the provided callback with the current textarea value.
+ *
+ * @param header - Text displayed as the modal header.
+ * @param onSubmit - Callback invoked with the textarea content when the user clicks Submit.
+ * @param placeholder - Placeholder text for the textarea input.
+ * @param closeModal - Callback to close the modal, triggered by overlay, close button, or Cancel button.
+ */
 
 export default function Modal({
   header,
