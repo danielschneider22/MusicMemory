@@ -19,8 +19,6 @@ export default function Modal({
   const [text, setText] = useState("");
   console.log(text);
 
-  const badVariable = "";
-  const tree = badVariable + "asdf";
   return (
     <>
       <div
