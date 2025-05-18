@@ -7,7 +7,6 @@ import { AgGridReact } from "ag-grid-react";
 import styles from "./SongChoicesModal.module.css";
 
 interface Props {
-  header: string;
   selectSong: (song: Song) => void;
   ignoreChoice: () => void;
   songChoice: Song[];
