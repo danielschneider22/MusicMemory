@@ -18,12 +18,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: black !important;
 }
 
 @layer utilities {
@@ -53,4 +48,14 @@ body {
 .ag-theme-alpine * {
   box-sizing: content-box;
   line-height: normal;
+}
+
+/* Lock AG Grid cell layout + vertical centering */
+.ag-theme-alpine .ag-cell {
+  display: block; /* override any flex */
+  line-height: var(--ag-row-height);
+}
+
+.ag-theme-alpine .ag-cell-wrapper {
+  align-items: center;
 }
