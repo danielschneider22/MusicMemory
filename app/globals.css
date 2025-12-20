@@ -29,15 +29,28 @@ body {
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
- /* Hide scrollbar for IE, Edge and Firefox */
+  /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-}
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
 
-.ag-aria-description-container{
+.ag-aria-description-container {
   display: none;
+}
+.ag-theme-alpine {
+  --ag-background-color: #1f2937;
+  --ag-foreground-color: #e5e7eb;
+  --ag-header-background-color: #111827;
+  --ag-border-color: #374151;
+}
+.ag-root,
+.ag-root *,
+.ag-theme-alpine,
+.ag-theme-alpine * {
+  box-sizing: content-box;
+  line-height: normal;
 }
