@@ -23,13 +23,16 @@ fs.readFile(csvFilePath, "utf8", (err, data) => {
         return;
       }
 
-      const jsonArray = records.map(([artist, title, album, genre], index) => ({
-        artist,
-        title,
-        album,
-        genre,
-        id: index + 1,
-      }));
+      const jsonArray = records.map(
+        ([artist, title, album, genre, length], index) => ({
+          artist,
+          title,
+          album,
+          genre,
+          length,
+          id: index + 1,
+        })
+      );
 
       fs.writeFile(jsonFilePath, JSON.stringify(jsonArray, null, 2), (err) => {
         if (err) {

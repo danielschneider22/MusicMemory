@@ -62,6 +62,14 @@ export default function SongsGrid({ setGridAPI }: Props) {
       resizable: true,
       width: 120,
     },
+    {
+      headerName: "Length",
+      field: "length",
+      sortable: true,
+      filter: true,
+      resizable: true,
+      width: 100,
+    },
     { headerName: "Y/N", field: "yesno", hide: true },
     { headerName: "Reaction Notes", field: "reactionnotes", hide: true },
     {
