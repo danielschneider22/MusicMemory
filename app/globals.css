@@ -42,20 +42,11 @@ body {
   --ag-header-background-color: #111827;
   --ag-border-color: #374151;
 }
-.ag-root,
-.ag-root *,
-.ag-theme-alpine,
-.ag-theme-alpine * {
+.ag-theme-alpine {
   box-sizing: content-box;
-  line-height: normal;
 }
 
-/* Lock AG Grid cell layout + vertical centering */
-.ag-theme-alpine .ag-cell {
-  display: block; /* override any flex */
-  line-height: var(--ag-row-height);
-}
-
-.ag-theme-alpine .ag-cell-wrapper {
-  align-items: center;
+.ag-theme-alpine .ag-root,
+.ag-theme-alpine .ag-root-wrapper {
+  box-sizing: content-box;
 }
