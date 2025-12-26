@@ -1,0 +1,4 @@
+pullRequest:
+  instructions:
+    - "Ensure all new features or bug fixes are accompanied by appropriate unit and integration tests."
+    - "Flag any PRs that do not include tests for added or changed functionality."
